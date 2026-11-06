@@ -23,5 +23,5 @@ WORKDIR /workspace
 
 # OpenCode Ajan Servisini 8080 portunda dinleyecek şekilde başlatın
 EXPOSE 8080
-CMD ["tail", "-f", "/dev/null"]
-# CMD ["opencode", "serve", "--host", "0.0.0.0", "--port", "8080"]
+
+CMD ["opencode", "serve", "--hostname", "0.0.0.0", "--port", "8080"]
