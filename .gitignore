@@ -7,6 +7,9 @@ ienv
 # Ignore workspace directory (Docker volume / bind mount)
 workspace/
 
+# Ignore OpenCode data directory (mounted for .local)
+opencode_data/
+
 # Docker artifacts
 Dockerfile
 docker-compose.override.yml
