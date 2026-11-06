@@ -14,6 +14,10 @@ services:
       - GIT_SSH_COMMAND=ssh -i /ssh/id_rsa -o StrictHostKeyChecking=no
       - HOME=/home/user # ensure a writable home dir
       - XDG_DATA_HOME=/home/user/.local # OpenCode writes here
+      - XDG_CACHE_HOME=/home/user/.cache   # cache directory
+      - XDG_CONFIG_HOME=/home/user/.config # config directory
+      - XDG_CACHE_HOME=/home/user/.cache   # cache directory
+      - XDG_CONFIG_HOME=/home/user/.config # config directory
     volumes:
       - ./workspace:/app # repo workspace
       - ${GITHUB_SSH_KEY}:/ssh/id_rsa:ro # SSH key

@@ -7,8 +7,10 @@ ienv
 # Ignore workspace directory (Docker volume / bind mount)
 workspace/
 
-# Ignore OpenCode data directory (mounted for .local)
+# Ignore OpenCode data directories (mounted for .local, .cache, .config)
 opencode_data/
+opencode_cache/
+opencode_config/
 
 # Docker artifacts
 Dockerfile
