@@ -12,9 +12,12 @@ services:
       - cloudflared
     environment:
       - GIT_SSH_COMMAND=ssh -i /ssh/id_rsa -o StrictHostKeyChecking=no
+      - HOME=/home/user
+      - XDG_DATA_HOME=/home/user/.local
     volumes:
       - ./workspace:/app
       - ${GITHUB_SSH_KEY}:/ssh/id_rsa:ro
+      - ./opencode_data:/home/user/.local
     # Add any additional configuration or volumes as needed
 
   cloudflared:
