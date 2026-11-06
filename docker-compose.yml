@@ -1,6 +1,6 @@
 services:
   opencode:
-    image: ghcr.io/anomalyco/opencode:2
+    image: ghcr.io/anomalyco/opencode:2.0.0
     working_dir: /app
     user: "${USER_ID}:${GROUP_ID}"
     env_file:
@@ -13,7 +13,7 @@ services:
     environment:
       - GIT_SSH_COMMAND=ssh -i /ssh/id_rsa -o StrictHostKeyChecking=no
     volumes:
-      - ./:/app
+      - ./workspace:/app
       - ${GITHUB_SSH_KEY}:/ssh/id_rsa:ro
     # Add any additional configuration or volumes as needed
 
