@@ -4,7 +4,7 @@ services:
     image: ghcr.io/anomalyco/opencode:latest
     working_dir: /workspace
     user: "${USER_ID}:${GROUP_ID}"
-    command: [ "opencode", "web", "--hostname", "0.0.0.0", "--port", "4096" ]
+    #command: [ "opencode", "web", "--hostname", "0.0.0.0", "--port", "4096" ]
     env_file:
       - .env
     ports:
