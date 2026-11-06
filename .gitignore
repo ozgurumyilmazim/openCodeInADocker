@@ -13,7 +13,7 @@ opencode_cache/
 opencode_config/
 
 # Docker artifacts
-Dockerfile
+#Dockerfile
 docker-compose.override.yml
 
 # OS generated files
