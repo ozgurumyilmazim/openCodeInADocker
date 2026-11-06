@@ -1,26 +1,32 @@
 services:
   opencode:
     container_name: opencode
-    image: ghcr.io/anomalyco/opencode:2.0.0
-    working_dir: /app
+    image: ghcr.io/anomalyco/opencode:latest
+    working_dir: /workspace
     user: "${USER_ID}:${GROUP_ID}"
+    command: [ "opencode", "web", "--hostname", "0.0.0.0", "--port", "4096" ]
     env_file:
       - .env
     ports:
-      - "8081:8080"
+      - "4096:4096"
     restart: unless-stopped
     depends_on:
       - cloudflared
     environment:
+      # Authentication (Critical: OpenCode has shell access, enforce strong credentials)
+      - OPENCODE_SERVER_USERNAME=${OPENCODE_SERVER_USERNAME:-opencode}
+      - OPENCODE_SERVER_PASSWORD=${OPENCODE_SERVER_PASSWORD:-password}
+      # Model Provider API Keys (supply your desired providers in .env)
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
+      - OPENCODE_API_KEY=${OPENCODE_API_KEY:-}
       - GIT_SSH_COMMAND=ssh -i /ssh/id_rsa -o StrictHostKeyChecking=no
       - HOME=/home/user # ensure a writable home dir
-      - XDG_DATA_HOME=/home/user/.local # OpenCode writes here
-      - XDG_CACHE_HOME=/home/user/.cache # cache directory
-      - XDG_CONFIG_HOME=/home/user/.config # config directory
     volumes:
-      - ./workspace:/app # repo workspace
       - ${GITHUB_SSH_KEY}:/ssh/id_rsa:ro # SSH key
       - ./home_user:/home/user
+      - ./workspace:/workspace # Mount your host project files to the agent workspace
 
   cloudflared:
     image: cloudflare/cloudflared:latest
