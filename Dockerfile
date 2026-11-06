@@ -14,11 +14,11 @@ RUN apt-get update && apt-get install -y \
 RUN npm install -g opencode-ai@latest
 
 # Güvenlik gereği root olmayan bir kullanıcı oluşturun
-RUN addgroup --gid ${GROUP_ID} user 
+RUN addgroup --gid 1001 user 
 
-RUN adduser --uid ${USER_ID} --gid ${GROUP_ID} --home /home/user --shell /bin/sh user 
+RUN adduser --uid 1001 --gid 1001 --home /home/user --shell /bin/sh user 
 
-RUN chown -R ${USER_ID}:${GROUP_ID} /home/user
+RUN chown -R 1001:1001 /home/user
 
 USER user
 WORKDIR /workspace
