@@ -30,6 +30,11 @@ services:
       - OPENCODE_API_KEY=${OPENCODE_API_KEY:-}
       - GIT_SSH_COMMAND=ssh -i /ssh/id_rsa -o StrictHostKeyChecking=no
       - HOME=/home/user # ensure a writable home dir
+      # Evren LLM Bağlantı Parametreleri
+      - OPENCODE_PROVIDER=custom
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=${OPENAI_MODEL}
     volumes:
       - ${GITHUB_SSH_KEY}:/ssh/id_rsa:ro # SSH key
       - ./home_user:/home/user
