@@ -1,6 +1,6 @@
 services:
   opencode:
-    image: ghcr.io/anomalyco/opencode:2.0.0
+    image: ghcr.io/anomalyco/opencode:2
     working_dir: /app
     user: "${USER_ID}:${GROUP_ID}"
     env_file:
@@ -24,4 +24,3 @@ services:
       - TUNNEL_TOKEN=${CLOUDFLARED_TUNNEL_TOKEN}
     restart: unless-stopped
     # The tunnel token should be stored in the .env file
-
