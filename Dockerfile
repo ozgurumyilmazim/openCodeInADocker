@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt-get/lists/*
 
 # OpenCode'u npm / official kurulum yöntemiyle global olarak kurun
-RUN npm install -g opencode-ai@latest
+RUN npm install -g opencode-ai@1
 
 # Güvenlik gereği root olmayan bir kullanıcı oluşturun
 ARG USER_ID
