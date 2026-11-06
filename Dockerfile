@@ -14,8 +14,8 @@ RUN apt-get update && apt-get install -y \
 RUN npm install -g opencode-ai@latest
 
 # Güvenlik gereği root olmayan bir kullanıcı oluşturun
-RUN addgroup -g ${GROUP_ID} user && \
-    adduser -u ${USER_ID} -G user -D -h /home/user -s /bin/sh user && \
+RUN addgroup --gid ${GROUP_ID} user && \
+    adduser --uid ${USER_ID} --gid ${GROUP_ID} --home /home/user --shell /bin/sh user && \
     chown -R ${USER_ID}:${GROUP_ID} /home/user
 
 USER user
