@@ -7,10 +7,20 @@
 # Exit on any error
 set -e
 
+# Clone the target repository (if configured)
+if [[ -n "${GIT_REPO_URL}" && -n "${REPO_DIR}" ]]; then
+  if [ -d "${REPO_DIR}" ]; then
+    echo "Repository directory \"${REPO_DIR}\" already exists. Updating..."
+    (cd "${REPO_DIR}" && git pull || echo "Git pull failed, continuing...")
+  else
+    echo "Cloning repository ${GIT_REPO_URL} into ${REPO_DIR}..."
+    git clone "${GIT_REPO_URL}" "${REPO_DIR}" || echo "Git clone failed, continuing..."
+  fi
+fi
+
 # If a GitHub Container Registry token is provided, log in before pulling images
 if [[ -n "${GHCR_TOKEN}" ]]; then
   echo "Logging into GHCR.io..."
-  # Use the provided username or fallback to the current system user
   GHCR_USER="${GHCR_USERNAME:-$USER}"
   echo "${GHCR_TOKEN}" | docker login ghcr.io -u "${GHCR_USER}" --password-stdin
 fi
