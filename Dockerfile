@@ -1,17 +1,27 @@
-FROM ghcr.io/anomalyco/opencode:2.0.0
+FROM debian:bookworm-slim
 
-ARG USER_ID=1001
-ARG GROUP_ID=1001
+# Temel araçları ve Node.js 20 LTS ortamını kurun
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    ca-certificates \
+    gnupg \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt-get/lists/*
 
-# Create group and user with the specified IDs
+# OpenCode'u npm / official kurulum yöntemiyle global olarak kurun
+RUN npm install -g opencode-ai@latest
+
+# Güvenlik gereği root olmayan bir kullanıcı oluşturun
 RUN addgroup -g ${GROUP_ID} user && \
     adduser -u ${USER_ID} -G user -D -h /home/user -s /bin/sh user && \
-    mkdir -p /home/user && chown -R ${USER_ID}:${GROUP_ID} /home/user
+    chown -R ${USER_ID}:${GROUP_ID} /home/user
 
-# Set the home directory for the user
-ENV HOME=/home/user
+USER user
+WORKDIR /workspace
 
-# Switch to the non‑root user for the container runtime
-USER ${USER_ID}:${GROUP_ID}
-
-
+# OpenCode Ajan Servisini 8080 portunda dinleyecek şekilde başlatın
+EXPOSE 8080
+CMD ["tail", "-f", "/dev/null"]
+# CMD ["opencode", "serve", "--host", "0.0.0.0", "--port", "8080"]

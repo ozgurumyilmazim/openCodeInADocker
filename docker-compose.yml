@@ -1,4 +1,5 @@
 services:
+
   opencode:
     container_name: opencode
     build:
@@ -9,12 +10,12 @@ services:
         GROUP_ID: ${GROUP_ID}
     working_dir: /workspace
     user: "${USER_ID}:${GROUP_ID}"
-    command: [ "opencode", "serve" ]
     env_file:
       - .env
     ports:
       - "4096:4096"
       - "49374:49374"
+      - "8081:8080"
     restart: unless-stopped
     depends_on:
       - cloudflared
@@ -33,6 +34,8 @@ services:
       - ${GITHUB_SSH_KEY}:/ssh/id_rsa:ro # SSH key
       - ./home_user:/home/user
       - ./workspace:/workspace # Mount your host project files to the agent workspace
+    networks:
+      - opencode-net
 
   cloudflared:
     image: cloudflare/cloudflared:latest
@@ -41,3 +44,8 @@ services:
       - TUNNEL_TOKEN=${CLOUDFLARED_TUNNEL_TOKEN}
     restart: unless-stopped
     # The tunnel token should be stored in the .env file
+    networks:
+      - opencode-net
+networks:
+  opencode-net:
+    driver: bridge
