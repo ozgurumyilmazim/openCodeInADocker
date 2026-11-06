@@ -1,7 +1,12 @@
 services:
   opencode:
     container_name: opencode
-    image: ghcr.io/anomalyco/opencode:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        USER_ID: ${USER_ID}
+        GROUP_ID: ${GROUP_ID}
     working_dir: /workspace
     user: "${USER_ID}:${GROUP_ID}"
     #command: [ "opencode", "web", "--hostname", "0.0.0.0", "--port", "4096" ]
