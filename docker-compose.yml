@@ -1,5 +1,6 @@
 services:
   opencode:
+    container_name: opencode
     image: ghcr.io/anomalyco/opencode:2.0.0
     working_dir: /app
     user: "${USER_ID}:${GROUP_ID}"
